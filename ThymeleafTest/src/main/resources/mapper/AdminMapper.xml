@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thymeleaf.demo.mapper.AdminMapper">
+    <insert id="save">
+        insert into admin(admin_name,admin_pwd,admin_phone,create_time)
+        values (
+            #{admin.adminName}, #{admin.adminPwd},#{admin.adminPhone},#{admin.createTime}
+        );
+
+    </insert>
+
+    <!--    批量添加-->
+    <insert id="saveByBatch">
+        insert into admin(admin_name,admin_pwd,admin_phone,create_time)
+        values
+        <foreach collection="list" item="admin" index="index" separator=",">
+            (#{admin.adminName}, #{admin.adminPwd},#{admin.adminPhone},#{admin.createTime})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        update admin
+        <set>
+            <if test="admin.adminName != null">
+                admin_name=#{admin.adminName},
+            </if>
+            <if test="admin.adminPwd != null">
+                admin_pwd=#{admin.adminPwd},
+            </if>
+            <if test="admin.updateTime">
+                update_Time=#{admin.updateTime},
+            </if>
+        </set>
+            where id =#{admin.id};
+    </update>
+    <delete id="deleteTrue">
+        delete  from admin where id=#{id};
+    </delete>
+
+<!--    软删除-->
+    <delete id="deleteFalse">
+
+        update admin set id_deleted=1 where id=#{id}
+
+    </delete>
+<!--    批量删除-->
+    <delete id="deleteByBatch">
+        delete  from admin where
+        <foreach collection="list" item="id" index="index" separator=" or ">
+            id=#{id}
+        </foreach>
+    </delete>
+
+    <select id="findAll" resultType="com.thymeleaf.demo.entity.Admin">
+        select * from admin
+    </select>
+<!--    查询单条数据-->
+    <select id="findByPk" resultType="com.thymeleaf.demo.entity.Admin">
+        select *
+        from admin where id=#{id} and is_deleted=0;
+    </select>
+    <select id="findByParam" resultType="com.thymeleaf.demo.entity.Admin">
+        select * from admin
+        <where>
+            is_deleted =0
+            <if test="param.keywords != null">
+                and admin_name like concat("%",#{admin.keywords},"%")
+            </if>
+            <if test="param.status != null">
+               and admin_status =#{param.status}
+
+            </if>
+            <if test="param.startTime != null">
+                and create_time&gt;=#{param.startTime}
+            </if>
+            <if test="param.endTime != null">
+                and create_time &lt;=#{param.endTime}
+            </if>
+        </where>
+    </select>
+
+
+    <!--    根据用户名查密码-->
+    <select id="checkPwd" resultType="com.thymeleaf.demo.entity.Admin">
+        select * from admin where admin_name =#{admin.adminName}
+        and admin_pwd=#{admin.adminPwd} ;
+    </select>
+
+</mapper>
