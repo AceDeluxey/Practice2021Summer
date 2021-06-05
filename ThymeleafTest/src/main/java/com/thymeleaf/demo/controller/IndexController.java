@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,12 @@ public class IndexController {
      * @return
      */
     @GetMapping({"/index","/"})
-    public String index(){
+    public String index(HttpSession session){
+//       if(session.getAttribute("adminName")==null){
+//           return  "redirect:/login/page";
+//       } else{
+//           return "index";
+//       }
         return "index";
     }
 

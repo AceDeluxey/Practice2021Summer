@@ -1,12 +1,15 @@
 package com.thymeleaf.demo.entity;
 
 
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 public class Admin {
 
   private Integer id;
+  @NotBlank(message ="用户名不能为空")
   private String adminName;
+  @NotBlank(message ="用户密码不能为空")
   private String adminPwd;
   private Long adminPhone;
   private Timestamp lastLoginTime;

@@ -28,7 +28,10 @@
                 admin_pwd=#{admin.adminPwd},
             </if>
             <if test="admin.updateTime">
-                update_Time=#{admin.updateTime},
+                update_time=#{admin.updateTime},
+            </if>
+            <if test="admin.lastLoginTime">
+                last_login_time=#{admin.lastLoginTime},
             </if>
         </set>
             where id =#{admin.id};
@@ -81,9 +84,8 @@
 
 
     <!--    根据用户名查密码-->
-    <select id="checkPwd" resultType="com.thymeleaf.demo.entity.Admin">
-        select * from admin where admin_name =#{admin.adminName}
-        and admin_pwd=#{admin.adminPwd} ;
+    <select id="findByName" resultType="com.thymeleaf.demo.entity.Admin">
+        select * from admin where admin_name =#{adminName}
     </select>
 
 </mapper>

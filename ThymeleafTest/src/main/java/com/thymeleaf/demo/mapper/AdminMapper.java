@@ -40,5 +40,5 @@ public interface AdminMapper {
      */
     Admin findByPk(@Param("id") Integer id);
 
-    Admin checkPwd(@Param("admin") Admin admin);
+    Admin findByName(@Param("adminName") String adminName);
 }

@@ -18,7 +18,11 @@ class ThymeleafTestApplicationTests {
     private AdminMapper mapper;
 
 
-
+    @Test
+    public void testFinByName(){
+        String name="admin";
+        mapper.findByName(name);
+    }
     @Test
     public void testFindAll(){
         List<Admin> admins = mapper.findAll();

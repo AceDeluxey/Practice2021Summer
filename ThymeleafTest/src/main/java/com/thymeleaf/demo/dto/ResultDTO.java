@@ -16,6 +16,11 @@ public class ResultDTO {
         this.data = data;
     }
 
+    public ResultDTO(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public void setCode(Integer code) {
         this.code = code;
     }

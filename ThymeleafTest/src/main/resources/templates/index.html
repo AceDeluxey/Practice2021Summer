@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
 	<meta charset="UTF-8">
-	<title>后台登录-X-admin2.0</title>
+	<title>后台登录</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -35,11 +35,12 @@
         </ul>
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
-            <a href="javascript:;">admin</a>
+            <a href="javascript:;" th:text="${session.get('adminName')}"></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
               <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
-              <dd><a href="/login/page">退出</a></dd>
+              <dd><a  data-method="show" id="quit_Button">退出</a></dd>
+<!--                href="/login/page"-->
             </dl>
           </li>
           <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
@@ -282,6 +283,23 @@
         <div class="copyright">Copyright ©2017 x-admin 2.3 All Rights Reserved  更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></div>  
     </div>
     <!-- 底部结束 -->
+    <script>
+        $("#quit_Button").click(function (){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: '提示'
+                    ,content: '您确定要退出吗？'
+                    ,yes: function(index, layero){
+                        location.href="/login/out"
+                    }
+                });
 
+            });
+        })
+
+
+    </script>
 </body>
+
 </html>
